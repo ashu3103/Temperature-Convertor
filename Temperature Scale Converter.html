@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farenheit-Celcius Scale</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;300&display=swap" rel="stylesheet">  
+    <style>
+        body{
+            font-family: 'Josefin Sans', sans-serif;
+            
+        }
+        body::before{
+            background-image: url("https://media.istockphoto.com/vectors/thermometer-icon-set-hot-and-cold-weather-vector-isolated-vector-id1155429134?s=612x612");
+            background-size: contain;
+            content: "";
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        h1{
+            text-align: center;
+            font-size: 40px;
+        }
+        .container{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px
+        }
+        .firstcontainer{
+            background-color: rgb(226, 223, 223);
+            border: 2px solid black;
+            border-radius: 10px;
+            font-size: 20px;
+            /* padding: 50px; */
+        }
+        .secondcontainer{
+            background-color: rgb(226, 223, 223);
+            border: 2px solid black;
+            border-radius: 10px;
+            font-size: 20px;
+            /* padding: 50px; */
+            margin-left: 20px;
+        }
+        .button{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 35px;
+        }
+        #btn{
+            
+            font-size: 17px;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .firstcontainer>input{
+            margin-left: 30px;
+            font-size: 20px;
+            border-radius: 5px;
+        }
+        .secondcontainer>input{
+            margin-left: 30px;
+            font-size: 20px;
+            border-radius: 5px;
+        }
+        #formula{
+            margin-top: 30px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        #formula>p{
+            display: inline;
+        }
+        #formula>span{
+            font-size: 22px;
+            background-color: black;
+            color: aliceblue;
+            padding: 3px;
+        }
+        .firstcontainer>select{
+            font-size: 15px;
+            width: 100%;
+            height: 30px;
+            border-radius: 5px;
+            margin-top: 40px;
+            margin-bottom: 1px;
+        }
+        .secondcontainer>select{
+            font-size: 15px;
+            width: 100%;
+            height: 30px;
+            border-radius: 5px;
+            margin-top: 40px;
+        }    
+    </style>
+</head>
+<body>
+    <h1>Temperature Scale Converter</h1>
+    <hr>
+    <section>
+    <div class="container">
+        <div class="firstcontainer">
+            <b><h3 id="head1" style="margin-left: 40px;">Farenheit:</h3></b>
+            <!-- <input type="number" id="f" class="1" name="farenheit" value="" placeholder="farenheit" onfocus=focusfunc(this) onblur=blurfunc(this) oninput=FuncC() onchange=FuncC()> -->
+            <input type="number" id="f" class="1" name="farenheit" value= "0">
+            <select name="temp_scale" id="temp_scale1">
+                <option value="farenheit">Farenheit</option>
+                <option value="celcius">Celcius</option>
+                <option value="kelvin">Kelvin</option>
+            </select>
+            <br>
+            
+        </div>
+        <div class="secondcontainer">
+            <b><h3 id="head2" style="margin-left: 40px;">Celcius:</h3></b>
+            <!-- <input type="number" id="c" class="1" name="celcius" value="" placeholder="celcius" onfocus=focusfunc(this) onblur=blurfunc(this) oninput=FuncF() onchange=FuncF()> -->
+            <input type="number" id="c" class="1" name="celcius" value="-17.77777777777778">
+            <select name="temp_scale" id="temp_scale2">
+                <option value="celcius">Celcius</option>
+                <option value="farenheit">Farenheit</option>
+                <option value="kelvin">Kelvin</option>
+            </select>
+            <br>
+        </div>
+        
+    </div>
+    </section>
+    <div id="formula">
+        <span id="span">Formula:</span><p id="para"> (0°F − 32)×5/9 = -17.777777778°C</p>
+    </div>
+    <section>
+        <div class="button">
+            <button id="btn" onclick="convert()">Convert</button>
+        </div>
+    </section>
+    <script>
+        // function focusfunc(element){
+        //     element.style.background = "lightgrey";
+        //     element.style.border = "1px solid lightblue"
+        // }
+        // function blurfunc(element){
+        //     element.style.background = "";
+        //     element.value = "undefined";
+        // }
+        // function FuncC(){
+        //     x = document.getElementById("f").value;
+        //     y = document.getElementById("c").value;
+        //     document.getElementById("c").value = (x-32)*(5/9);
+        // }
+        // function FuncF(){
+        //     x = document.getElementById("f").value;
+        //     y = document.getElementById("c").value;
+        //     document.getElementById("f").value = (y*(9/5))+32;
+        // }
+        function convert(){
+            if((document.getElementById('temp_scale1').value=="farenheit")&&(document.getElementById('temp_scale2').value=="celcius")){
+
+                let x = document.getElementById("f").value;
+                if((x>-459.67)||(x==(-459.67))){
+                     document.getElementById("c").value = (Number(x)-32)*(5/9);
+                }
+                else{
+                     document.getElementById("c").value = undefined;
+                }
+                y = document.getElementById("c").value;
+                document.getElementById('para').innerHTML= ` (${x}°F − 32)×5/9 = ${y}°C`;
+                document.getElementById('head1').innerText = "Farenheit";
+                document.getElementById('head2').innerText = "Celcius";
+            }
+            else if((document.getElementById('temp_scale1').value=="kelvin")&&(document.getElementById('temp_scale2').value=="celcius")){
+                let x = document.getElementById("f").value;
+                if((x>0)||(x==0)){
+                     document.getElementById("c").value = (Number(x)-(273.15));
+                }
+                else{
+                     document.getElementById("c").value = undefined;
+                }
+                y = document.getElementById("c").value;
+                document.getElementById('para').innerHTML= ` (${x}K − 273.15) = ${y}°C`;
+                document.getElementById('head1').innerText = "Kelvin";
+                document.getElementById('head2').innerText = "Celcius";
+            }
+            else if((document.getElementById('temp_scale1').value=="kelvin")&&(document.getElementById('temp_scale2').value=="farenheit")){
+                let x = document.getElementById("f").value;
+                if((x>0)||(x==0)){
+                    document.getElementById("c").value = (Number(x)-273.15)*(9/5) + 32;
+                }
+                else{
+                    document.getElementById("c").value = undefined;
+                }
+                y = document.getElementById("c").value;
+                document.getElementById('para').innerHTML= ` (${x}K − 273.15)x(9/5) + 32 = ${y}°F`;
+                document.getElementById('head1').innerText = "Kelvin";
+                document.getElementById('head2').innerText = "Farenheit";
+            }
+            else if((document.getElementById('temp_scale1').value=="kelvin")&&(document.getElementById('temp_scale2').value=="kelvin")){
+                let x = document.getElementById("f").value;
+                if((x>0)||(x==0)){
+                    document.getElementById("c").value = x;
+                }
+                else{
+                    document.getElementById("c").value = undefined;
+                }
+                y = document.getElementById("c").value;
+                document.getElementById('para').innerHTML= ` ${x}K = ${y}K`;
+                document.getElementById('head1').innerText = "Kelvin";
+                document.getElementById('head2').innerText = "Kelvin";
+            }
+            else if((document.getElementById('temp_scale1').value=="farenheit")&&(document.getElementById('temp_scale2').value=="kelvin")){
+                let x = document.getElementById("f").value;
+                if((x>-459.67)||(x==(-459.67))){
+                    document.getElementById("c").value = (Number(x)-32)*(5/9)+(273.15);
+                }
+                else{
+                    document.getElementById("c").value = undefined;
+                }
+                y = document.getElementById("c").value;
+                document.getElementById('para').innerHTML= ` (${x}°F − 32)x(5/9) + 273.15 = ${y}K`;
+                document.getElementById('head1').innerText = "Farenheit";
+                document.getElementById('head2').innerText = "Kelvin";
+            }
+            else if((document.getElementById('temp_scale1').value=="farenheit")&&(document.getElementById('temp_scale2').value=="farenheit")){
+                let x = document.getElementById("f").value;
+                if((x>-459.67)||(x==(-459.67))){
+                    document.getElementById("c").value = x;
+                }
+                else{
+                    document.getElementById("c").value = undefined;
+                }
+                y = document.getElementById("c").value;
+                document.getElementById('para').innerHTML= ` ${x}°F = ${y}°F`;
+                document.getElementById('head1').innerText = "Farenheit";
+                document.getElementById('head2').innerText = "Farenheit";
+            }
+            else if((document.getElementById('temp_scale1').value=="celcius")&&(document.getElementById('temp_scale2').value=="kelvin")){
+                let x = document.getElementById("f").value;
+                if((x>-273.15)||(x==-273.15)){
+                     document.getElementById("c").value = Number(x)+(273.15);
+                }
+                else{
+                     document.getElementById("c").value = undefined;
+                }
+                y = document.getElementById("c").value;
+                document.getElementById('para').innerHTML= ` (${x}°C + 273.15) = ${y}K`;
+                document.getElementById('head1').innerText = "Celcius";
+                document.getElementById('head2').innerText = "Kelvin";
+            }
+            else if((document.getElementById('temp_scale1').value=="celcius")&&(document.getElementById('temp_scale2').value=="farenheit")){
+                let x = document.getElementById("f").value;
+                if((x>-273.15)||(x==-273.15)){
+                     document.getElementById("c").value = (Number(x)*(9/5))-32;
+                }
+                else{
+                     document.getElementById("c").value = undefined;
+                }
+                y = document.getElementById("c").value;
+                document.getElementById('para').innerHTML= ` (${x}°C)*(9/5)-32 = ${y}°F`;
+                document.getElementById('head1').innerText = "Celcius";
+                document.getElementById('head2').innerText = "Farenheit";
+            }
+            else if((document.getElementById('temp_scale1').value=="celcius")&&(document.getElementById('temp_scale2').value=="celcius")){
+                let x = document.getElementById("f").value;
+                if((x>-273.15)||(x==-273.15)){
+                     document.getElementById("c").value = x;
+                }
+                else{
+                     document.getElementById("c").value = undefined;
+                }
+                y = document.getElementById("c").value;
+                document.getElementById('para').innerHTML= ` ${x}°C = ${y}°C`;
+                document.getElementById('head1').innerText = "Celcius";
+                document.getElementById('head2').innerText = "Celcius";
+            }
+        
+        }
+    </script>
+</body>
+</html>
